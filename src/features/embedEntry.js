@@ -1,6 +1,8 @@
 const fetch = require(`node-fetch`);
 const rp = async (query) => await(await fetch(query)).text();
 const {MessageEmbed} = require(`${process.cwd()}/util/discord/structs.js`);
+const { supportedPages, supportedSubpages } = require(`${process.cwd()}/components/config.json`);
+const PageUnsupportedError = require(`${process.cwd()}/util/errors/PageUnsupportedError.js`);
 
 function embedEntry(url)
 {
@@ -9,8 +11,13 @@ function embedEntry(url)
 		try {
 			const response = await rp(url);
 			if(!response) return;
-			const type = response.split(`dnd5e/Index%3A`)[1].split(`"`)[0];
-			if(type === 'Classes') {resolve();return;}
+			const subpage = supportedSubpages.find(subpage => url.includes(subpage));
+			const type = subpage || response.split(`Index%3A`)[1].split(`"`)[0];
+			if(!(subpage || supportedPages.includes(type)))
+			{
+				reject(new PageUnsupportedError(`cannot generate embed: unsupported type "${type}"`));
+				return;
+			}
 			const {n:name, c:attributes} = JSON.parse(response.split(`3e\\n","attributes":`)[1].split(`};`)[0].replace(/"—"/g, `""`));
 			
 			for(let prop in attributes) 
@@ -44,7 +51,7 @@ function embedEntry(url)
 				case 'Items':
 					resolve(item(name,attributes,url,response));
 				default:
-					reject(new ValueError(`cannot generate embed: unknown type "${type}"`));
+					reject(new TypeError(`cannot generate embed: unknown type "${type}"`));
 			}
 		} catch(e) {
 			reject(e);

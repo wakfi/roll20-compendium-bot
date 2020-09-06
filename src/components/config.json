@@ -13,5 +13,7 @@
     },
     "clientStatus": {
         "status": "online"
-    }
+    },
+	"supportedPages": ["Spells","Items"],
+	"supportedSubpages": ["Conditions"]
 }
