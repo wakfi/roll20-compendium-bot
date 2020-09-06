@@ -28,17 +28,21 @@ client.on("message", async message =>
 	if(urlsNotDeduped == false) return;
 	const urls = [];
 	urlsNotDeduped.forEach(url => !urls.includes(url) && urls.push(url));
-	await message.suppressEmbeds();
 	const embeds = [];
 	const len = urls.length < 5 ? urls.length : 4;
 	for(let i = 0; i < len; i++)
 	{
 		try {
 			const embed = await embedEntry(urls[i]);
-			message.channel.send(embed).catch(er=>console.error(er.stack));
+			await message.channel.send(embed).catch(er=>console.error(er.stack));
 		} catch(e) {
 			console.error(e.stack);
 		}
+	}
+	try {
+		await message.suppressEmbeds();
+	} catch(e) {
+		console.error(e.stack);
 	}
 });
 
