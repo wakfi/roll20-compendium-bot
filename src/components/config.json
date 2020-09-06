@@ -1,3 +1,17 @@
 {
-	"prefix": ";;"
+	"prefix": ";;",
+	"clientOptions": {
+        "autoReconnect": true,
+        "apiRequestMethod": "sequential",
+        "disabledEvents": ["TYPING_START","TYPING_STOP"],
+        "fetchAllMembers": true
+    },
+    "activity": {
+        "args": [],
+        "name": "5E",
+        "type": "PLAYING"
+    },
+    "clientStatus": {
+        "status": "online"
+    }
 }

@@ -2,7 +2,7 @@
   "name": "roll20bot",
   "version": "1.0.0",
   "description": "Discord bot for conversion of roll20 compendium links into an embed with the information",
-  "main": "index.js",
+  "main": "src/roll20bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/wakfi/roll20-compendium-bot#readme",
   "dependencies": {
-    "discord.js": "^12.3.1"
+    "discord.js": "^12.3.1",
+    "node-fetch": "^2.6.1"
   }
 }
