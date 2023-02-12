@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   deploy:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     runs-on: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v1
@@ -15,4 +15,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: 22
           key: ${{ secrets.SSHKEY }}
-          script: cd ${{ secrets.PROJECTPATH }} && git pull origin master && npm i
+          script: cd ${{ secrets.PROJECTPATH }} && git checkout -- . && git pull origin main && npm i && pm2 restart roll20bot
