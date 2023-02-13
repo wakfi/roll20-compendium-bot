@@ -10,4 +10,19 @@ function sliceAt(source, search, after = false) {
   }
 }
 
-module.exports = sliceAt;
+/**
+ *
+ * @returns {string & {sliceAt: (search: string, after=: boolean) => ReturnType<typeof sliceAtPipeline>}}
+ */
+function sliceAtPipeline(source) {
+  const sliceFn = (search, after) =>
+    sliceAtPipeline(sliceAt(source, search, after));
+  const sliceable = String(source);
+  sliceable.sliceAt = sliceFn;
+  return sliceable;
+}
+
+module.exports = {
+  sliceAt,
+  sliceAtPipeline,
+};
