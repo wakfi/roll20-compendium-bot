@@ -10,7 +10,8 @@ function embedEntry(url) {
       if (!response) return;
       const type = sliceAtPipeline(response)
         .sliceAt(`dnd5e/Index%3A`, true)
-        .sliceAt(`"`);
+        .sliceAt(`"`)
+        .toString();
       if (type === "Classes") {
         resolve();
         return;
