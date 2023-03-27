@@ -1,4 +1,5 @@
 function main() {
+  const fetch = require("node-fetch");
   const Discord = require(`discord.js`);
   const {
     prefix,
